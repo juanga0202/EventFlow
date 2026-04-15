@@ -1,0 +1,45 @@
+name: Taller CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout del código
+        uses: actions/checkout@v4
+
+      - name: 2. Simular construcción
+        run: echo "Construyendo el proyecto..."
+
+      - name: 3. Simular guardado
+        run: |
+          mkdir -p build
+          cp index.html build/
+          echo "Archivos movidos a /build"
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout del código
+        uses: actions/checkout@v4
+
+      - name: 2. Prueba simple
+        run: |
+          echo "Ejecutando pruebas..."
+          grep -q "Rock" index.html
+          echo "Prueba pasada"
+
+      - name: 3. Prueba de contenido
+        run: |
+          grep -q "EventFlow" index.html
+          echo "Prueba de contenido pasada"
+
+      - name: 4. Despliegue simulado
+        run: echo "Listo para desplegar"
